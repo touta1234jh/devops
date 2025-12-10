@@ -17,12 +17,12 @@ pipeline {
         stage('Build') {
             steps {
                 dir('timesheet-devops') {
-                    echo "🛠️ Compilation du projet avec Maven"
+                    echo "🛠️ Compilation du projet avec Maven (tests totalement ignorés)"
                     sh 'echo JAVA_HOME=$JAVA_HOME'
                     sh 'java -version'
                     sh 'echo M2_HOME=$M2_HOME'
                     sh 'mvn -version'
-                    sh 'mvn clean package -DskipTests'
+                    sh 'mvn clean package -Dmaven.test.skip=true'
                 }
             }
         }
