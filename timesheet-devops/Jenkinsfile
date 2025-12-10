@@ -28,24 +28,41 @@ pipeline {
     }
 }
 
-        stage('SonarQube Analysis') {
-            steps {
-                dir('timesheet-devops') {
-                    echo "🔍 Analyse SonarQube"
-                    withSonarQubeEnv('sonarqube') {
-                        withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
-                            sh '''
-                                mvn sonar:sonar \
-                                  -Dsonar.projectKey=MonProjet \
-                                  -Dsonar.host.url=http://localhost:9000 \
-                                  -Dsonar.login=$SONAR_TOKEN
-                            '''
-                        }
-                    }
+       stage('SonarQube Analysis') {
+    steps {
+        dir('timesheet-devops') {
+            echo "🔍 Analyse SonarQube"
+            withSonarQubeEnv('sonarqube') {
+                withCredentials([string(credentialsId: 'sonar-token1', variable: 'SONAR_TOKEN')]) {
+                    sh '''
+                        mvn sonar:sonar \
+                          -Dsonar.projectKey=MonProjet \
+                          -Dsonar.host.url=http://localhost:9000 \
+                          -Dsonar.token=$SONAR_TOKEN
+                    '''
                 }
             }
         }
     }
+}
+stage('SonarQube Analysis') {
+    steps {
+        dir('timesheet-devops') {
+            echo "🔍 Analyse SonarQube"
+            withSonarQubeEnv('sonarqube') {
+                withCredentials([string(credentialsId: 'sonar-token1', variable: 'SONAR_TOKEN')]) {
+                    sh '''
+                        mvn sonar:sonar \
+                          -Dsonar.projectKey=MonProjet \
+                          -Dsonar.host.url=http://localhost:9000 \
+                          -Dsonar.token=$SONAR_TOKEN
+                    '''
+                }
+            }
+        }
+    }
+}
+
 
     post {
         success {
